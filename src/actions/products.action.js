@@ -4,6 +4,7 @@ import axios from 'axios'; //third party library to send AJAX requests
 const URL = 'http://localhost:8080/products';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 
 export const addProduct = (product, succeed, fail) => {
     const addProductsPromise = axios.post(URL, product)
@@ -36,3 +37,19 @@ export const getProducts = product => {
         payload: getProductsPromise
     };
 };
+
+export function editProduct(editProduct, callback) {
+    let promise = axios.put(URL, editProduct)
+        .then(res => {
+            callback(res);
+            return {
+                product: editProduct,
+                success: res.data.success
+            };
+        });
+    return {
+        type: EDIT_PRODUCT,
+        payload: promise
+    };
+}
+

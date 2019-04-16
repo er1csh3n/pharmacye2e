@@ -1,4 +1,4 @@
-import {ADD_PRODUCT, GET_PRODUCTS} from "../actions/products.action";
+import {ADD_PRODUCT, GET_PRODUCTS, EDIT_PRODUCT} from "../actions/products.action";
 
 export const productsReducer = (state = null, action) => { //state = products, action if we are not getting products from backend
     switch (action.type) {
@@ -10,10 +10,21 @@ export const productsReducer = (state = null, action) => { //state = products, a
 
         case GET_PRODUCTS:
             console.log(action.payload);
-            //get payload: promise
-            //promise has two cases, promise resolved, set state to returned products
-            //promise rejected return old state
             return action.payload.data;
+
+
+        case EDIT_PRODUCT:
+            if (action.payload.success) {
+                const product = action.payload.product;
+                const index = state.findIndex(p => p.id === product.id);
+                const newProductsState = [...state];
+                newProductsState.splice(index, 1, product);
+                console.log(newProductsState);
+                return newProductsState;
+            } else {
+                return state;
+            }
+
 
         default:
             return state;

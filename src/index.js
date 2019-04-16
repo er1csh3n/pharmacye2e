@@ -15,6 +15,9 @@ import Register from './components/Register';
 import AddProduct from "./containers/AddProduct";
 import auth from "./components/auth.hoc";
 import Prescriptions from "./components/Prescriptions";
+import EditProduct from "./containers/EditProduct";
+import Analytics from "./components/Analytics";
+import Logout from "./components/Logout";
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -26,11 +29,14 @@ ReactDOM.render(
             <App>
                 <Switch>
                     <Route path="/login" component = { Login }/>
+                    <Route path="/logout" component = { Logout }/>
                     <Route path="/register" component = { Register }/>
                     <Route path="/products" component = { Products }/>
                     {/*<Route path="/add-product" component={ auth(AddProduct) }/>*/}
                     <Route path="/add-product" component={ AddProduct }/>
                     <Route path="/prescriptions" component = { Prescriptions }/>
+                    <Route path="/edit-product/:id" component = { EditProduct }/>
+                    <Route path="/analytics" component = { Analytics }/>
                 </Switch>
             </App>
         </BrowserRouter>

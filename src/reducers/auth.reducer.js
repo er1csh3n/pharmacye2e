@@ -1,4 +1,4 @@
-import {LOGIN} from "../actions/auth.action";
+import {LOGIN, LOGOUT} from "../actions/auth.action";
 
 export const authReducer = (state=null, action) => {
 
@@ -8,6 +8,13 @@ export const authReducer = (state=null, action) => {
                 return action.payload.user;
             }
             return state;
+        case LOGOUT:
+            if (action.payload.success) {
+                return null;
+            } else {
+                return state;
+            }
+
         default:
             return state;
     }
