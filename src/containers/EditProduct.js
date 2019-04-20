@@ -2,7 +2,6 @@ import React from "react";
 import {Field, reduxForm} from "redux-form";
 import { connect } from "react-redux";
 import {getProducts} from "../actions/products.action";
-import Form from "react-bootstrap/Form";
 import {editProduct} from "../actions/products.action";
 
 /*class EditProduct extends React.Component {

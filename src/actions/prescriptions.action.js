@@ -1,9 +1,10 @@
-import axios from 'axios'; //third party library to send AJAX requests
+import axios from 'axios';
 
 
 const URL = 'http://localhost:8080/prescriptions';
 export const ADD_PRESCRIPTION = 'ADD_PRESCRIPTION';
 export const GET_PRESCRIPTIONS = 'GET_PRESCRIPTIONS';
+export const EDIT_PRESCRIPTION = 'EDIT_PRESCRIPTION';
 
 export const addPrescription = (prescription, succeed, fail) => {
     const addPrescriptionPromise = axios.post(URL, prescription)
@@ -36,3 +37,20 @@ export const getPrescriptions = prescription => {
         payload: getPrescriptionsPromise
     };
 };
+
+export function editPrescription(editPrescription,id,  callback) {
+    console.log(editPrescription);
+    let promise = axios.put(`${URL}/${id}`, editPrescription)
+        .then(res => { //res is not what I need
+            console.log('in .then', res);
+            callback(res);
+            return {
+                prescription: editPrescription,
+                success: res.data.success
+            };
+        });
+    return {
+        type: EDIT_PRESCRIPTION,
+        payload: promise
+    };
+}

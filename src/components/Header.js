@@ -1,35 +1,37 @@
 import React from 'react';
-import {Link, NavLink} from 'react-router-dom';
 import {Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {NavLink} from "react-router-dom";
 const Header = () => {
     return(
         <header>
-            <Navbar collapseOnSelect expand="lg">
+            <Navbar bg="dark" variant="dark">
                 <Navbar.Brand>Meijer Pharmacies</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <NavDropdown title="Inventory" href="#products" id="collapsible-nav-dropdown">
-                            <NavDropdown.Item href="products">All Products</NavDropdown.Item>
+                        <NavLink className="nav-link" to="/home">Home</NavLink>
+                        <NavDropdown title="Inventory" id="collapsible-nav-dropdown">
+                            <NavLink style={{color:"black"}} className="nav-link" to="/products">All Products</NavLink>
                             <NavDropdown.Divider/>
-                            <NavDropdown.Item href="add-product">Add Product</NavDropdown.Item>
+                            <NavLink style={{color:"black"}} className="nav-link" to="/add-product">Add Product</NavLink>
                         </NavDropdown>
-                        <Nav.Link href="analytics">Analytics</Nav.Link>
-                        <NavDropdown title="Prescriptions"  href="#prescriptions" id="collapsible-nav-dropdown">
-                            <NavDropdown.Item href="prescriptions">All</NavDropdown.Item>
-                            <NavDropdown.Item href="pending">Pending</NavDropdown.Item>
-                            <NavDropdown.Item href="processing">Processing</NavDropdown.Item>
+
+                        <NavLink className="nav-link" to="/analytics">Analytics</NavLink>
+                        <NavDropdown title="Prescriptions" id="collapsible-nav-dropdown">
+                            <NavLink style={{color:"black"}} className="nav-link" to="/add-prescription">Add Prescription</NavLink>
+                            <NavDropdown.Divider/>
+                            <NavLink style={{color:"black"}} className="nav-link" to="/prescriptions">All</NavLink>
+                            <NavLink style={{color:"black"}} className="nav-link" to="/prescriptions/pending">Pending</NavLink>
+                            <NavLink style={{color:"black"}} className="nav-link" to="/prescriptions/processing">Processing</NavLink>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="completed">Completed</NavDropdown.Item>
-                            <NavDropdown.Item href="cancelled">Cancelled</NavDropdown.Item>
+                            <NavLink style={{color:"black"}} className="nav-link" to="/prescriptions/completed">Completed</NavLink>
+                            <NavLink style={{color:"black"}} className="nav-link" to="/prescriptions/cancelled">Cancelled</NavLink>
                         </NavDropdown>
                     </Nav>
+
                     <Nav>
-                        <Nav.Link href="login">Login</Nav.Link>
-                        <Nav.Link href="register">Register</Nav.Link>
+                        <NavLink className="nav-link" to="/login">Login</NavLink>
+                        <NavLink className="nav-link" to="/register">Register</NavLink>
                     </Nav>
-                </Navbar.Collapse>
-            </Navbar>
+                </Navbar>
         </header>
     );
 };

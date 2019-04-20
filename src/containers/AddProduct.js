@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {bindActionCreators} from "redux";
 import {addProduct} from "../actions/products.action";
 
 class AddProduct extends React.Component {

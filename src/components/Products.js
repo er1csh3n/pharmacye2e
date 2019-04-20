@@ -3,8 +3,6 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {getProducts} from "../actions/products.action";
 import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table"
-import divWithClassName from "react-bootstrap/es/utils/divWithClassName";
-
 
 class Products extends React.Component {
 
@@ -64,27 +62,41 @@ class Products extends React.Component {
         );
     };
 
+
     render() {
 
             return (
-                <div>
+                <container>
+                    <br/>
+                    <br/>
                 {this.props.products && <div>
-                    <BootstrapTable data={this.props.products} options={this.options}>
-                        <TableHeaderColumn key={this.props.products.id} dataField='id' isKey dataSort
-                                           filter={{type: 'TextFilter', delay: 100}} dataFormat = {this.colFormatter}>ID</TableHeaderColumn>
+                    <BootstrapTable data={this.props.products} options={this.options} condensed hover pagination keyBoardNav>
+                        <TableHeaderColumn width="10%" key={this.props.products.id} dataField='id' isKey dataSort
+                                           filter={{type: 'TextFilter'}} dataFormat = {this.colFormatter} dataAlign='center'>ID</TableHeaderColumn>
+
                         <TableHeaderColumn dataField='category' dataSort
-                                           filter={{type: 'TextFilter', delay: 100}}>Category</TableHeaderColumn>
+                                           filter={{type: 'TextFilter'}} dataAlign='center' >Category</TableHeaderColumn>
+
                         <TableHeaderColumn dataField='name' dataSort
-                                           filter={{type: 'TextFilter', delay: 100}}>Name</TableHeaderColumn>
+                                           filter={{type: 'TextFilter'}} dataAlign='center' >Name</TableHeaderColumn>
+
                         <TableHeaderColumn dataField='brand' dataSort
-                                           filter={{type: 'TextFilter', delay: 100}}>Brand</TableHeaderColumn>
+                                           filter={{type: 'TextFilter'}} dataAlign='center' >Brand</TableHeaderColumn>
+
                         <TableHeaderColumn dataField='price' dataSort
-                                           filter={{type: 'TextFilter', delay: 100}}>Price</TableHeaderColumn>
-                        <TableHeaderColumn dataField='stock' dataSort
-                                           filter={{type: 'TextFilter', delay: 100}}>Stock</TableHeaderColumn>
+                                           filter={{
+                                               type: 'NumberFilter',
+                                               numberComparators: [ '=', '>', '<=', '>=', '<' ]
+                                           }} dataAlign='center'>Price($)</TableHeaderColumn>
+
+                        <TableHeaderColumn  dataField='stock' dataSort
+                                            filter={{
+                                                type: 'NumberFilter',
+                                                numberComparators: [ '=', '>', '<=', '>=', '<' ]
+                                            }} dataAlign='center' >Stock</TableHeaderColumn>
                     </BootstrapTable>
                 </div>}
-                </div>
+                </container>
             )
         }
 }

@@ -18,6 +18,10 @@ import Prescriptions from "./components/Prescriptions";
 import EditProduct from "./containers/EditProduct";
 import Analytics from "./components/Analytics";
 import Logout from "./components/Logout";
+import Home from "./components/Home";
+import PrescriptionDetail from "./components/PrescriptionDetail";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AddPrescription from "./containers/AddPrescription";
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -28,13 +32,16 @@ ReactDOM.render(
         <BrowserRouter>
             <App>
                 <Switch>
+                    <Route path="/home" component = { Home }/>
                     <Route path="/login" component = { Login }/>
                     <Route path="/logout" component = { Logout }/>
                     <Route path="/register" component = { Register }/>
                     <Route path="/products" component = { Products }/>
                     {/*<Route path="/add-product" component={ auth(AddProduct) }/>*/}
                     <Route path="/add-product" component={ AddProduct }/>
+                    <Route path="/add-prescription" component = { AddPrescription }/>
                     <Route path="/prescriptions" component = { Prescriptions }/>
+                    <Route path="/prescription/:id" component = { PrescriptionDetail }/>
                     <Route path="/edit-product/:id" component = { EditProduct }/>
                     <Route path="/analytics" component = { Analytics }/>
                 </Switch>

@@ -28,7 +28,8 @@ class Register extends React.Component {
                 validated={validated}
                 onSubmit={e => this.handleSubmit(e)}
             >
-                <Form.Row>
+                <br/>
+                <br/>
                     <Form.Group as={Col} md="4" controlId="validationCustom01">
                         <Form.Label>Username</Form.Label>
                         <Form.Control
@@ -47,8 +48,7 @@ class Register extends React.Component {
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+
                     <Form.Group as={Col} md="4" controlId="validationCustom01">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
@@ -71,8 +71,6 @@ class Register extends React.Component {
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
                     <Form.Group as={Col} md="4" controlId="validationCustom01">
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control
@@ -89,7 +87,6 @@ class Register extends React.Component {
                             Please provide a valid phone number.
                         </Form.Control.Feedback>
                     </Form.Group>
-                </Form.Row>
                 <Form.Group>
                     <Form.Check
                         required
@@ -98,6 +95,9 @@ class Register extends React.Component {
                     />
                 </Form.Group>
                 <Button type="submit">Submit form</Button>
+                <br/>
+                <br/>
+                <br/>
             </Form>
         );
     }
