@@ -32,18 +32,17 @@ ReactDOM.render(
         <BrowserRouter>
             <App>
                 <Switch>
-                    <Route path="/home" component = { Home }/>
+                    <Route path="/home" component = {Home}/>
                     <Route path="/login" component = { Login }/>
-                    <Route path="/logout" component = { Logout }/>
                     <Route path="/register" component = { Register }/>
-                    <Route path="/products" component = { Products }/>
+                    <Route path="/products" component = { auth(Products) }/>
                     {/*<Route path="/add-product" component={ auth(AddProduct) }/>*/}
-                    <Route path="/add-product" component={ AddProduct }/>
-                    <Route path="/add-prescription" component = { AddPrescription }/>
-                    <Route path="/prescriptions" component = { Prescriptions }/>
-                    <Route path="/prescription/:id" component = { PrescriptionDetail }/>
-                    <Route path="/edit-product/:id" component = { EditProduct }/>
-                    <Route path="/analytics" component = { Analytics }/>
+                    <Route path="/add-product" component={ auth(AddProduct) }/>
+                    <Route path="/add-prescription" component = { auth(AddPrescription) }/>
+                    <Route path="/prescriptions" component = { auth(Prescriptions) }/>
+                    <Route path="/prescription/:id" component = { auth(PrescriptionDetail) }/>
+                    <Route path="/edit-product/:id" component = { auth(EditProduct) }/>
+                    <Route path="/analytics" component = { auth(Analytics) }/>
                 </Switch>
             </App>
         </BrowserRouter>

@@ -11,7 +11,7 @@ class Prescriptions extends React.Component {
 
         this.options = {
             defaultSortName: 'purchase_date',  // default sort column name
-            defaultSortOrder: 'asc'  // default sort order
+            defaultSortOrder: 'desc'  // default sort order
         };
     }
 
@@ -22,12 +22,16 @@ class Prescriptions extends React.Component {
 
     showStatus = (status) => {
         // console.log(status);
-        return status.status;
+        const statusString = status.status;
+        //return status.status;
+        return statusString;
     };
 
     showName = (cell) => {
         // console.log(cell);
-        return cell.userDetail.name;
+        const nameString = cell.userDetail.name;
+        //return cell.userDetail.name;
+        return nameString;
     };
 
     colFormatter = (cell) => {

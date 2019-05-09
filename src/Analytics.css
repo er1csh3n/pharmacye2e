@@ -1,0 +1,6 @@
+.analytics_position {
+    display:flex;
+    flex-direction:column;
+    padding-left: 20px;
+    padding-top: 20px;
+}

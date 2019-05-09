@@ -1,0 +1,20 @@
+.bg_image .center_div {
+    margin: 0 auto;
+    display: block;
+    overflow: auto;
+    width: 320px;
+}
+
+.bg_image {
+    background-image: url(images/pharmacy_background.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-color: #999;
+}
+
+.terms {
+    overflow: auto;
+    height: 150px;
+}

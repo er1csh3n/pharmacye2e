@@ -1,6 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import {addPrescription} from "../actions/prescriptions.action";
+import {getProducts} from "../actions/products.action";
+import {Form} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import '../AddPrescription.css';
+import axios from "axios";
+import Card from "react-bootstrap/Card";
+
+const URL = 'http://localhost:8080/users';
+const URL2 = 'http://localhost:8080/products';
 
 class AddPrescription extends React.Component {
 
@@ -8,10 +17,9 @@ class AddPrescription extends React.Component {
         super(props);
         this.state = {
             prescription: {
-                name: '',
-                date: '',
-                product: [],
-                status: ''
+                user: null,
+                purchase_date: '',
+                purchases: []
             },
             msg: ''
         }
@@ -28,35 +36,83 @@ class AddPrescription extends React.Component {
 
     submit = (event) => {
         event.preventDefault();
+
+        console.log('this.state.prescription', this.state.prescription);
+
         this.props.addPrescription(this.state.prescription,
             res => {
                 console.log('added successfully', res);
-                this.setState({
-                    msg: 'added successfully'
-                });
+                //this.setState({
+                //    msg: 'added successfully'
+                //});
             },
             err => {
                 console.log('add failed', err);
-                this.setState({
-                    msg: 'add failed'
-                });
+                //this.setState({
+                //    msg: 'add failed'
+                //});
             });
     };
 
-    // addInput =()=> {
-    //     const prescription = {...this.state.prescription};
-    //     prescription.products.push([]);
-    //     this.setState({
-    //         prescription: prescription
-    //     })
-    // };
 
-    connectIndex =(index)=> {
+
+    addInput =()=> {
         const prescription = {...this.state.prescription};
+        prescription.purchases.push({});
         this.setState({
-            prescription
+            prescription: prescription
         })
+    };
 
+    connectIndex(index, event){
+        const prescription = {...this.state.prescription};
+        const product_id = event.target.value;
+
+        axios.get(`${URL2}/${product_id}`)
+            .then(res => {
+                console.log(index);
+                console.log(prescription);
+                    prescription.purchases[index].product = res.data;
+                    console.log('connectIndex', prescription);
+                    this.setState({
+                        prescription: prescription
+                    })
+                }
+            );
+    };
+
+    onChangeUser = (id) => {
+        console.log(id.target.value);
+        const pre = this.state.prescription;
+        axios.get(`${URL}/${id.target.value}`)
+            .then(res => { //res is not what I need
+                console.log('in .then', res);
+                pre.user = res.data;
+
+                console.log('pre', pre);
+                this.setState({
+                    prescription: pre
+                })
+            });
+
+    };
+
+    onChangeDate = (date) => {
+        console.log(date.target.value);
+        const pre = this.state.prescription;
+        pre.purchase_date = date.target.value;
+        this.setState({
+            prescription: pre
+        });
+    };
+
+    onChangeQuantity(index, event){
+        console.log(event.target.value);
+        const pre = this.state.prescription;
+        pre.purchases[index].qty = event.target.value;
+        this.setState({
+            prescription: pre
+        })
     };
 
 
@@ -64,44 +120,67 @@ class AddPrescription extends React.Component {
     render(){
         console.log(this.state.prescription);
         return (
-            <form className="flex-column">
-                <div>
-                    <label>Date
-                    <input className="form-control" type="text"/>
+            <div className="prescription_center_div">
+            <Form className="flex-row">
+                    <label><img
+                        src={require('../images/date.png')}
+                        width="60"
+                        height="60"
+                        className="d-inline-block align-middle"
+                        alt="Date"
+                        hspace="20"
+                    />
+                    <input className="form-control-sm" type="text" onChange={this.onChangeDate} />
                     </label>
-                    <label>Name
-                    <input className="form-control" type="text"/>
+                    <label><img
+                        src={require('../images/name.png')}
+                        width="60"
+                        height="60"
+                        className="d-inline-block align-middle"
+                        alt="Date"
+                        hspace="20"
+                    />
+                    <input className="form-control-sm" type="text" onChange={this.onChangeUser}/>
                     </label>
+                <Button type="button" onClick={this.addInput}>Add Item</Button>
+                <Card>
+                    {
+                        this.state.prescription.purchases.map((value,index)=>{
+                            return(
+                                <div key={index} className="prescription_product_div">
+                                    <label>{`${index + 1}`}<img
+                                        src={require('../images/pill_bottle.png')}
+                                        width="55"
+                                        height="50"
+                                        className="d-inline-block align-middle"
+                                        alt="Date"
+                                        hspace="20"
+                                    /></label>
+                                        <input type="text" className="form-control-sm" value={this.state.prescription.purchases[index].id} onChange={this.connectIndex.bind(this, index)} />
+                                    <label><img
+                                        src={require('../images/multiply.png')}
+                                        width="30"
+                                        height="30"
+                                        className="d-inline-block align-middle"
+                                        alt="Date"
+                                        hspace="20"
+                                    /></label>
+                                        <input type="text" className="form-control-sm" value={this.state.prescription.purchases[index].qty} onChange = {this.onChangeQuantity.bind(this, index)}/>
+                                </div>
+                            )
+                        })
+                    }
+                </Card>
                     <label>Status</label>
                     <select defaultValue='Pending'>
-                        <option>Pending</option>
-                        <option>Processing</option>
-                        <option>Completed</option>
-                        <option>Cancelled</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Processing</option>
+                        <option value="3">Completed</option>
+                        <option value="4">Cancelled</option>
                     </select>
-                    {/*<button type="button" onClick={this.addInput}>+Product</button>*/}
-
-                    <div>
-                        <label>Product Name</label>
-                        <input type="text" onChange={this.connectIndex} />
-                        <label>Quantity</label>
-                        <input type="text"/>
-                    </div>
-                    {/*{*/}
-                        {/*this.state.prescription.products.map((value,index)=>{*/}
-                            {/*return(*/}
-                                {/*<div key={index}>*/}
-                                    {/*<label>{`Product #${index + 1}`}</label>*/}
-                                        {/*<input type="text" onChange={this.connectIndex} />*/}
-                                    {/*<label>Quantity</label>*/}
-                                        {/*<input type="text" value={this.state.prescription.products[index].qty}/>*/}
-                                {/*</div>*/}
-                            {/*)*/}
-                        {/*})*/}
-                    {/*}*/}
-                    <button type="submit" onSubmit={this.submit}/>
-                </div>
-            </form>
+                    <Button onClick={this.submit}>SUBMIT</Button>
+            </Form>
+            </div>
         );
 
     }

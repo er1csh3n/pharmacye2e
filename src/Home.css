@@ -1,0 +1,37 @@
+
+.card_size {
+    width: 50%;
+    float: left;
+}
+
+.card_size_1 {
+    height: 50%;
+    width: 50%;
+    float: left;
+    padding-top: 22px;
+}
+
+.carousel_image {
+    width:640px;
+    height:360px;
+}
+
+.carousel_font {
+    font-size: 30px;
+    font-weight: bold;
+    font-variant: small-caps;
+    font-family: "Times New Roman", Times, serif;
+    color: navy;
+}
+
+.carousel_font_2 {
+    font-size: 30px;
+    font-weight: bold;
+    font-variant: small-caps;
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+}
+
+.home_bg_image {
+    background-image: url(images/home_background.jpg);
+}

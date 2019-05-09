@@ -5,8 +5,11 @@ import Form from "react-bootstrap/Form";
 import {Card, Container, ListGroup, Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {Field, reduxForm} from "redux-form";
+import '../PrescriptionDetail.css';
+
 
 class PrescriptionDetail extends React.Component {
+    statusChanged = false;
     constructor(props) {
         super(props);
         this.state = {};
@@ -15,6 +18,7 @@ class PrescriptionDetail extends React.Component {
         if (props.prescriptions) {
             const id = +props.match.params.id;
             const prescription = props.prescriptions.find(p => p.id === id);
+            console.log(props.prescriptions);
             return {
                 prescription: prescription
             };
@@ -25,9 +29,15 @@ class PrescriptionDetail extends React.Component {
 
     componentDidMount() {
         !this.props.prescriptions && this.props.getPrescriptions(); //if props.products does not exist then getProducts
+        console.log(this.props.prescription);
+    }
+
+    shouldComponentUpdate() {
+        return !this.statusChanged;
     }
 
     submitHandler = (event) => {
+        this.statusChanged = false;
         event.preventDefault();
         console.log(this.state.prescription);
         this.props.editPrescription(this.state.prescription, this.state.prescription.id, (res) => {
@@ -55,6 +65,7 @@ class PrescriptionDetail extends React.Component {
 
     changeStatus = (event) => {
         console.log(event.target.value);
+        this.statusChanged = true;
         const prescription = {...this.state.prescription};
         prescription.status.status = event.target.value;
         this.setState({
@@ -70,7 +81,8 @@ class PrescriptionDetail extends React.Component {
                 {this.state.prescription && <Container>
                     <br/>
                     <br/>
-                    <Card style={{ width: '18rem' }}>
+                    <div className="position">
+                    <Card style={{ width: '18rem', margin: ' 0 20px 20px 0' }}>
                         <Card.Header>Prescription Information</Card.Header>
                         <ListGroup variant="flush">
                             <ListGroup.Item>Date: <br/>{this.state.prescription.purchase_date}</ListGroup.Item>
@@ -78,21 +90,25 @@ class PrescriptionDetail extends React.Component {
                             <ListGroup.Item>Current Status: <br/>{this.state.prescription.status.status}</ListGroup.Item>
                         </ListGroup>
                     </Card>
-                    <Form onSubmit={this.submitHandler}>
+                    <Form style={{ margin: ' 0 0 0 20px' }} onSubmit={this.submitHandler}>
                         <Form.Group>
-                            <Form.Label>Status</Form.Label>
+                            <Form.Label><h4>Change Status</h4></Form.Label>
                             <select className="form-control" onChange={this.changeStatus}>
                                 <option value="Pending">Pending</option>
                                 <option value="Processing">Processing</option>
                                 <option value="Completed">Completed</option>
                                 <option value="Cancelled">Cancelled</option>
                             </select>
-                            <Button type="submit" variant="primary" size="md" className="float-right">
+                            <br/>
+                            <div className="button_position">
+                            <Button type="submit" variant="primary" size="md">
                                 Change Status
                             </Button>
+                            </div>
                         </Form.Group>
                     </Form>
-                    <Table>
+                    </div>
+                    <Table hover size="md">
                         <thead>
                         <tr>
                             <th>Product</th>
@@ -114,20 +130,15 @@ class PrescriptionDetail extends React.Component {
                                 );
                             })
                         }
-                        <tr>
-                            <td>
-
-                            </td>
-                        </tr>
                         </tbody>
                     </Table>
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Header>Invoice</Card.Header>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>Total Invoice: <br/>${this.calcTotal()}</ListGroup.Item>
-                            <ListGroup.Item>Total Invoice with Insurance: ${this.calcTotal()*0.2}</ListGroup.Item>
-                        </ListGroup>
-                    </Card>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Header>Invoice</Card.Header>
+                            <ListGroup variant="flush">
+                                <ListGroup.Item>Total Invoice: <br/>${this.calcTotal()}</ListGroup.Item>
+                                <ListGroup.Item>Total Invoice with Insurance: ${this.calcTotal()*0.2}</ListGroup.Item>
+                            </ListGroup>
+                        </Card>
                     <br/>
                     <br/>
                     <br/>

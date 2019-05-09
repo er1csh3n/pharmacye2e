@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import {getProducts} from "../actions/products.action";
-import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table"
+import {getProducts, deleteProduct} from "../actions/products.action";
+import {BootstrapTable, DeleteButton, TableHeaderColumn} from "react-bootstrap-table";
+import {Button} from "react-bootstrap";
 
 class Products extends React.Component {
 
@@ -10,9 +11,19 @@ class Products extends React.Component {
         super(props);
 
         this.options = {
-            defaultSortName: 'name',  // default sort column name
-            defaultSortOrder: 'asc'  // default sort order
+            defaultSortName: 'id',  // default sort column name
+            defaultSortOrder: 'asc', // default sort order
+            deleteBtn: this.deleteButton
         };
+
+        this.state = {
+            selected: []
+        }
+    }
+
+    static getDerivedStateFromProps (props) {
+        !props.products && props.getProducts();
+        return null;
     }
 
     componentDidMount() {
@@ -20,41 +31,7 @@ class Products extends React.Component {
         console.log(this.props.products);
     }
 
-/*    render(){
-        return (
-            <table className="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Category</th>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    this.props.products && this.props.products.map(p=>{
-                        return (
-                            <tr key = {p.id}>
-                                <td><Link to = {`/edit-product/${p.id}`}>{p.id}</Link></td>
-                                <td>{p.category}</td>
-                                <td>{p.name}</td>
-                                <td>{p.brand}</td>
-                                <td>{p.price}</td>
-                                <td>{p.stock}</td>
-                            </tr>
-                        );
-                    })
-                }
-                </tbody>
-            </table>
-        );
-    }*/
-
     colFormatter = (cell) => {
-        console.log(cell);
         return (
             <Link to= {`/edit-product/${cell}`}>
                 {cell}
@@ -62,15 +39,73 @@ class Products extends React.Component {
         );
     };
 
+    // submit = (event) => {
+    //     event.preventDefault();
+    //     this.props.deleteProduct(this.state.product,
+    //         res => {
+    //             console.log('deleted successfully', res);
+    //             this.setState({
+    //                 msg: 'deleted item from inventory successfully'
+    //         });
+    //         },
+    //         err => {
+    //             console.log('delete failed', err);
+    //             this.setState({
+    //                 msg: 'could not delete item'
+    //             });
+    //         });
+    // };
+
+    handleDeleteButtonClick = (onClick) => {
+        // Custom your onClick event here
+        this.props.deleteProduct(this.state.selected);
+        onClick();
+    };
+
+    deleteButton = (onClick) => {
+        return (
+            <DeleteButton
+                btnText='Delete Selected Row(s)'
+                btnContextual='btn-danger'
+                btnGlyphicon='glyphicon-edit'
+                onClick={ () => this.handleDeleteButtonClick(onClick) }/>
+        );
+    };
+
+    onRowSelect = (row, isSelected) => {
+        console.log(row);
+        console.log(this.state);
+        if(isSelected) {
+            this.state.selected.push(row.id);
+        } else {
+            this.state.selected.splice(this.state.selected.indexOf(row.id), 1);
+        }
+        console.log(this.state.selected);
+        return true;
+    };
+
+    onSelectAll = (isSelected, rows) => {
+        if(isSelected) {
+            rows.forEach((row) => {this.state.selected.push(row.id)});
+        } else {
+            rows.forEach(() => {this.state.selected.pop()});
+        }
+        console.log(this.state.selected);
+    };
 
     render() {
-
+        const selectRow = {
+            mode: 'checkbox',
+            bgColor: 'yellow',
+            onSelect: this.onRowSelect,
+            onSelectAll: this.onSelectAll
+        };
             return (
                 <container>
                     <br/>
                     <br/>
                 {this.props.products && <div>
-                    <BootstrapTable data={this.props.products} options={this.options} condensed hover pagination keyBoardNav>
+                    <BootstrapTable data={this.props.products} selectRow = {selectRow} options={this.options} condensed hover pagination keyBoardNav deleteRow>
                         <TableHeaderColumn width="10%" key={this.props.products.id} dataField='id' isKey dataSort
                                            filter={{type: 'TextFilter'}} dataFormat = {this.colFormatter} dataAlign='center'>ID</TableHeaderColumn>
 
@@ -94,6 +129,11 @@ class Products extends React.Component {
                                                 type: 'NumberFilter',
                                                 numberComparators: [ '=', '>', '<=', '>=', '<' ]
                                             }} dataAlign='center' >Stock</TableHeaderColumn>
+                        <TableHeaderColumn  dataField='sold' dataSort
+                                            filter={{
+                                                type: 'NumberFilter',
+                                                numberComparators: [ '=', '>', '<=', '>=', '<' ]
+                                            }} dataAlign='center' >Sold</TableHeaderColumn>
                     </BootstrapTable>
                 </div>}
                 </container>
@@ -101,11 +141,11 @@ class Products extends React.Component {
         }
 }
 
-const mapStateToProps = (state) => { //determines what part of data from store that connected cocmponent needs
+const mapStateToProps = (state) => {
     return {
         products: state.products
     }
 };
 
-export default connect(mapStateToProps, {getProducts})(Products);
+export default connect(mapStateToProps, {getProducts,deleteProduct})(Products);
 

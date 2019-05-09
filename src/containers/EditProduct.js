@@ -3,6 +3,8 @@ import {Field, reduxForm} from "redux-form";
 import { connect } from "react-redux";
 import {getProducts} from "../actions/products.action";
 import {editProduct} from "../actions/products.action";
+import {Card, Form} from "react-bootstrap";
+import '../EditProduct.css';
 
 /*class EditProduct extends React.Component {
 
@@ -131,7 +133,7 @@ class EditProduct extends React.Component {
                         type={field.type}
                         className="form-control"
                         name={field.input.name}
-                        disabled={field.input.name === 'id'}
+                        disabled={field.input.name === 'id' || field.input.name === 'sold'}
                         {...field.input}
                     />
                 </label>
@@ -157,49 +159,57 @@ class EditProduct extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <h2 ref={this.h2ElemRef}>Edit Product</h2>
+            <div className="center_div">
+                <Card className = "text-center p-3">
+                <Card.Title ref={this.h2ElemRef}>EDIT PRODUCT</Card.Title>
                 {/*<p>Product to edit: {JSON.stringify(this.state.editProduct)}</p>*/}
-                <form onSubmit={this.props.handleSubmit(this.submitHandler)}>
+                <Form onSubmit={this.props.handleSubmit(this.submitHandler)}>
+                    <h6>ID</h6>
                     <Field
                         name="id"
-                        label="ID"
                         type="number"
                         component={this.renderField}
                     />
+                    <h6>NAME</h6>
                     <Field
                         name="name"
-                        label="Name"
                         type="text"
                         component={this.renderField}
                     />
+                    <h6>BRAND</h6>
                     <Field
                         name="brand"
-                        label="Brand"
                         type="text"
                         component={this.renderField}
                     />
-                    <Field
-                        name="price"
-                        label="Price"
-                        type="number"
-                        component={this.renderField}
-                    />
-                    <Field
-                        name="stock"
-                        label="Stock"
-                        type="number"
-                        component={this.renderField}
-                    />
+                    <h6>CATEGORY</h6>
                     <Field
                         name="category"
-                        label="Category"
                         type="text"
+                        component={this.renderField}
+                    />
+                    <h6>PRICE</h6>
+                    <Field
+                        name="price"
+                        type="number"
+                        component={this.renderField}
+                    />
+                    <h6>STOCK</h6>
+                    <Field
+                        name="stock"
+                        type="number"
+                        component={this.renderField}
+                    />
+                    <h6>SOLD</h6>
+                    <Field
+                        name="sold"
+                        type="number"
                         component={this.renderField}
                     />
                     <button type="submit" className="btn btn-primary">Submit</button>
                     <p>{this.state.message}</p>
-                </form>
+                </Form>
+                </Card>
             </div>
         );
     }

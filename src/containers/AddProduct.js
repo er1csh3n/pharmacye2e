@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from "react-redux";
 import {addProduct} from "../actions/products.action";
+import {Card, Form} from "react-bootstrap";
+import '../AddProduct.css';
 
 class AddProduct extends React.Component {
 
@@ -33,36 +35,42 @@ class AddProduct extends React.Component {
             res => {
                 console.log('added successfully', res);
                 this.setState({
-                    msg: 'added successfully'
+                    msg: 'added item to inventory successfully'
                 });
             },
             err => {
                 console.log('add failed', err)
                 this.setState({
-                    msg: 'add failed'
+                    msg: 'could not add item'
                 });
             });
     };
 
     render(){
         return (
-            <form className="flex-column" onSubmit={this.submit}>
+            <div className="center_div">
+            <Card className = "text-center p-3">
+                <Card.Title>ADD PRODUCT</Card.Title>
+            <Form className="flex-md-column" onSubmit={this.submit}>
                 {
                     Object.keys(this.state.product).map(
                         key => (
-                            <div className="form-group col-sm-6" key={key}>
+                            <div key={key}>
                                 <label htmlFor={key}>Product {key.charAt(0).toUpperCase()+key.slice(1)}:</label>
-                                <input className="form-control" type={key=== 'price' || key === 'stock' ? 'number' : 'text'
+                                <input className="form-control" type={key=== 'price' || key === 'stock' ? 'double' : 'text'
                                 } id={key} onChange={this.updateProduct}/>
                             </div>
                         )
                     )
                 }
-                <div className="col-sm-2">
+                <br/>
+                <div>
                     <div className={this.state.msg.indexOf('success')!==-1?'text-success' : 'text-danger'}>{this.state.msg}</div>
                     <button className="btn btn-dark">Submit</button>
                 </div>
-            </form>
+            </Form>
+            </Card>
+            </div>
         );
 
     }

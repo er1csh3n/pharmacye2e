@@ -1,0 +1,12 @@
+.position {
+    display:flex;
+    flex-direction:row;
+}
+
+.button_position {
+    float: bottom;
+}
+
+/*.flex_padding {*/
+    /*margin:0 10px 10px 0;*/
+/*}*/

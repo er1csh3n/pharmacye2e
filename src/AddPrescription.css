@@ -1,0 +1,22 @@
+.prescription_center_div {
+    padding-top: 50px;
+    margin: 0 auto;
+    display: flex;
+    overflow: auto;
+    width: 60%;
+    padding-bottom: 30px;
+}
+
+.prescription_product_div {
+    padding-top: 50px;
+    margin: 0 auto;
+    display: flex;
+    overflow: auto;
+    padding-bottom: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+input, label {
+    display: block;
+}

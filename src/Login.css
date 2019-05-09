@@ -1,0 +1,28 @@
+.login_bg_image .center_div {
+        padding-top: 80px;
+        margin: 0 auto;
+        display: block;
+        overflow: auto;
+        width: 320px;
+    }
+
+.center_form {
+        padding-top: 10px;
+        padding-bottom: 30px;
+        margin: 0 auto;
+    }
+
+.login_bg_image {
+    background-image: url(images/pharmacy_background.jpg);
+    background-size: cover;
+    height: fill-available;
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-color: #999;
+}
+
+#root .container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+}

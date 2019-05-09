@@ -1,4 +1,4 @@
-import {ADD_PRODUCT, GET_PRODUCTS, EDIT_PRODUCT} from "../actions/products.action";
+import {ADD_PRODUCT, GET_PRODUCTS, EDIT_PRODUCT, DELETE_PRODUCT} from "../actions/products.action";
 
 export const productsReducer = (state = null, action) => { //state = products, action if we are not getting products from backend
     switch (action.type) {
@@ -25,6 +25,12 @@ export const productsReducer = (state = null, action) => { //state = products, a
                 return state;
             }
 
+
+        case DELETE_PRODUCT:
+            if (action.payload.success) {
+                return null;
+            }
+            return state;
 
         default:
             return state;

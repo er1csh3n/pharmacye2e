@@ -1,0 +1,7 @@
+.center_div {
+    padding-top: 80px;
+    margin: 0 auto;
+    display: block;
+    overflow: auto;
+    width: 30%;
+}

@@ -54,3 +54,20 @@ export function editPrescription(editPrescription,id,  callback) {
         payload: promise
     };
 }
+
+// export function getUser(getUser,id, callback) {
+//     console.log(getUser);
+//     let getUserPromise = axios.get(`${URL2}/${id}`, getUser)
+//         .then(res => { //res is not what I need
+//             console.log('in .then', res);
+//             callback(res);
+//             return {
+//                 user: getUser,
+//                 success: res.data.success
+//             };
+//         });
+//     return {
+//         type: EDIT_PRESCRIPTION,
+//         payload: getUserPromise
+//     };
+// }
